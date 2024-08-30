@@ -2,6 +2,7 @@
   "name": "firebase-realtime",
   "version": "1.0.0",
   "description": "chat online mensajeria",
+  "target": "es2017",
   "scripts": {
     "dev": "parcel src/index.html",
     "build:front": "parcel build src/index.html",
