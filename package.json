@@ -17,16 +17,18 @@
     "@parcel/transformer-inline-string": "^2.10.3",
     "@vaadin/router": "^1.7.5",
     "body-parser": "^1.20.2",
-    "core-js": "^3.38.1",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
     "firebase": "^8.7.1",
     "firebase-admin": "^11.11.0",
     "lodash": "^4.17.21",
-    "nodemon": "^3.0.2",
     "parcel": "^2.10.3",
-    "process": "^0.11.10",
-    "ts-import": "^5.0.0-beta.0",
     "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "express": "^4.18.2",
+    "ts-import": "^5.0.0-beta.0",
+    "process": "^0.11.10",
+    "core-js": "^3.38.1",
+    "cors": "^2.8.5",
+    "nodemon": "^3.0.2"
   }
 }

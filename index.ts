@@ -1,6 +1,6 @@
 import { firestore, rtdb } from "./db";
-import * as express from "express";
-import * as cors from "cors";
+import express from "express";
+import cors from "cors";
 
 const port = process.env.PORT || 3000;
 
