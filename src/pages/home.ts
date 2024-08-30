@@ -1,4 +1,4 @@
-import { handleFormData } from "../utils/utils";
+import { handleFormData } from "../utils/utils.js";
 class Home extends HTMLElement {
   constructor() {
     super();

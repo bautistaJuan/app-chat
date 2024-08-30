@@ -1,7 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "es2015",
-    "moduleResolution": "node",
-     "resolveJsonModule": true ,
+    "compilerOptions": {
+      "target": "ESNext",
+      "moduleResolution": "node",
+       "resolveJsonModule": true  
+    }
   }
-}

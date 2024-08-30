@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.rtdb = exports.firestore = void 0;
 var admin = require("firebase-admin");
-var serviceAccount = require("./firebase-admin.json");
+var serviceAccount = require("./key.json");
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://dwf-chat-default-rtdb.firebaseio.com/",
