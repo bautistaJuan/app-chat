@@ -1,8 +1,8 @@
 import firebase from "firebase";
 const app = firebase.initializeApp({
-  apiKey: "AIzaSyDYyK5xfZ7JxkcddeMToq7EswEM-2WdxIg",
-  authDomain: "dwf-chat.firebaseapp.com",
-  databaseURL: "https://dwf-chat-default-rtdb.firebaseio.com/",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
 });
 const rtdb = firebase.database(app);
 
