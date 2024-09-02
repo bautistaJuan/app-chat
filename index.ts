@@ -171,7 +171,12 @@ app.get("/rooms/:roomId", (req, res) => {
 
 //
 //
-//  Initialize
+app.use(express.static("dist"));
+
+app.get("*", (req, res) => {
+  res.sendFile(__dirname + "/dist/index.html");
+});
+
 app.listen(port, () => {
-  console.log(`Ejecutando en : http://localhost:${port}`);
+  console.log(`Conectado en el puerto: ${port}`);
 });

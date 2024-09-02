@@ -4,10 +4,11 @@
   "description": "chat online mensajeria",
   "scripts": {
     "dev": "parcel src/index.html",
-    "build:front": "parcel build src/index.html",
+    "build:front": "parcel build ./src/index.html",
     "start": "nodemon --watch ./index.js",
     "server": "nodemon --watch ./index.ts --exec ts-node ./index.ts",
-    "build": "tsc "
+    "build": "tsc",
+    "build:full": "npm run build:front && npm run build"
   },
   "keywords": [],
   "author": "",
