@@ -7,7 +7,7 @@
     "build:front": "parcel build src/index.html",
     "start": "nodemon --watch ./index.js",
     "server": "nodemon --watch ./index.ts --exec ts-node ./index.ts",
-    "build": "tsc ./index.ts"
+    "build": "tsc "
   },
   "keywords": [],
   "author": "",
@@ -27,10 +27,14 @@
     "nodemon": "^3.0.2",
     "parcel": "^2.10.3",
     "process": "^0.11.10",
-    "ts-import": "^5.0.0-beta.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "typescript": "^5.5.4"
+    "@types/cors": "^2.8.17",
+    "@types/node": "^22.5.2",
+    "@types/request": "^2.48.12",
+    "form-data": "^4.0.0",
+    "undici-types": "^6.19.8"
   }
 }
