@@ -8,21 +8,14 @@ type Message = {
 };
 class Chat extends HTMLElement {
   id: "";
-  RoomId: "";
   messages: Message[] = [];
 
   connectedCallback() {
     const currentState = state.getState();
-
     this.id = currentState.roomId;
-    this.RoomId = currentState.rtdbroomId;
-    this.messages = currentState.messages;
 
     state.subscribe(() => {
-      const updatedState = state.getState();
-      this.id = updatedState.roomId;
-      this.RoomId = updatedState.rtdbroomId;
-      this.messages = updatedState.messages;
+      this.messages = currentState.messages;
       this.render();
     });
 
@@ -40,7 +33,7 @@ class Chat extends HTMLElement {
     const end = document.querySelector("#end");
     back?.addEventListener("click", () => Router.go("/room-selection"));
     end?.addEventListener("click", () => {
-      state.reset();
+      state.resetState();
       Router.go("/");
     });
     form?.addEventListener("submit", (e: any) => {
@@ -48,7 +41,8 @@ class Chat extends HTMLElement {
       e.preventDefault();
 
       if (target["new-message"].value) {
-        return state.pushMessages(target["new-message"].value);
+        state.pushMessages(target["new-message"].value);
+        target["new-message"].value;
       } else {
         return alert("No se puede enviar el mensaje");
       }

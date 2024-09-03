@@ -9,7 +9,7 @@ const serviceAccount = {
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
-  databaseURL: "https://dwf-chat-default-rtdb.firebaseio.com/",
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
 });
 
 const firestore = admin.firestore();

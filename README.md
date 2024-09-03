@@ -29,7 +29,7 @@ Welcome to the Chatroom Web Application! This project includes a simple front-en
 
 ## Live Demo
 
-Check out the live demo: [Chatroom Web App](https://chatroom-fxip.onrender.com/)
+Check out the live demo: [Chatroom Web App]
 
 Feel free to explore and start chatting!
 

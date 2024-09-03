@@ -22,8 +22,8 @@ const roomsCollection = firestore.collection("rooms");
  * @throws {Error} - If the user already exists.
  */
 app.post("/signup", (req, res) => {
-  const email: string = req.body.email;
-  const name: String = req.body.name;
+  const email = req.body.email;
+  const name = req.body.name;
 
   if (!email || !name) {
     return res.status(400).json({ error: "Email y nombre son requeridos" });
@@ -65,6 +65,11 @@ app.post("/auth", (req, res) => {
   const { email } = req.body;
   const { name } = req.body;
 
+  if (!email || !name) {
+    return res.status(400).json({
+      message: "Email y nombre son requeridos",
+    });
+  }
   usersCollection
     .where("email".toLowerCase(), "==", email)
     .where("name".toLowerCase(), "==", name)
@@ -99,7 +104,7 @@ app.post("/rooms", (req, res) => {
   const { userId } = req.body;
 
   usersCollection
-    .doc(userId.toString()) // Buscamos el documento con el id que nos pasaron en el body
+    .doc(userId) // Buscamos el documento con el id que nos pasaron en el body
     .get()
     .then(snap => {
       console.log(snap.exists);
@@ -168,9 +173,18 @@ app.get("/rooms/:roomId", (req, res) => {
       res.status(500).json({ message: "Internal server error" });
     });
 });
+app.post("/rooms/:roomId", (req, res) => {
+  const { roomId } = req.params;
 
-//
-//
+  const chatRoomRef = rtdb.ref("/rooms/" + roomId + "/messages");
+  chatRoomRef.on("value", snap => {
+    let value = snap.val();
+  });
+  chatRoomRef.push(req.body, function (e) {
+    res.json("message sent");
+  });
+});
+
 app.use(express.static("dist"));
 
 app.get("*", (req, res) => {

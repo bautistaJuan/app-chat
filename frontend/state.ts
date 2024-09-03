@@ -1,9 +1,17 @@
-const API_URL = "http://localhost:3000";
+const API_BASE_URL = "http://localhost:3000";
+import { ref, onValue } from "firebase/database";
 import { rtdb } from "./rtdb";
 import { map } from "lodash";
 import { Router } from "@vaadin/router";
+import e from "express";
 
-// import map from "lodash/map";
+/**
+ * The application state management object. It handles the state of the application, including user data, room information, and message history.
+ *
+ * The state object provides methods to initialize the state, set the room ID, set the user's name and email, push messages to the current room, sign up a new user, sign in an existing user, create a new room, access an existing room, and listen for changes to the room's message history.
+ *
+ * The state is stored in the browser's local storage, and is automatically loaded and updated when the application is loaded.
+ */
 const state = {
   data: {
     email: "",
@@ -63,19 +71,21 @@ const state = {
   },
   pushMessages(message: string) {
     const currentState = this.getState();
-    rtdb
-      .ref("/rooms/" + currentState.rtdbroomId + "/messages")
-      .push()
-      .set({
+    const roomId = currentState.rtdbroomId;
+    fetch(API_BASE_URL + "/rooms/" + roomId, {
+      headers: { "content-type": "application/json" },
+      method: "post",
+      body: JSON.stringify({
         from: currentState.fullName,
         text: message,
-      });
+      }),
+    });
   },
   signup(callback?) {
     const currentState = this.data;
     if (!currentState.email && !currentState.fullName) callback(false);
 
-    fetch(API_URL + "/signup", {
+    fetch(API_BASE_URL + "/signup", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -110,7 +120,7 @@ const state = {
     }
 
     try {
-      fetch(API_URL + "/auth", {
+      fetch(API_BASE_URL + "/auth", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -142,7 +152,7 @@ const state = {
       console.error("UserId empty");
       return callback(false);
     }
-    fetch(API_URL + "/rooms", {
+    fetch(API_BASE_URL + "/rooms", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -169,7 +179,7 @@ const state = {
     const userId = currenState.userId;
     const roomId = currenState.roomId;
 
-    fetch(API_URL + "/rooms/" + roomId + "?userId=" + userId)
+    fetch(API_BASE_URL + "/rooms/" + roomId + "?userId=" + userId)
       .then(res => {
         if (!res.ok) {
           if (callback) callback(false);
@@ -179,8 +189,8 @@ const state = {
       })
       .then(data => {
         currenState.rtdbroomId = data;
-        this.setState(currenState);
         this.listenRoom();
+        this.setState(currenState);
         if (callback) callback(true);
       })
       .catch(error => {
@@ -190,21 +200,32 @@ const state = {
       });
   },
   listenRoom() {
+    console.log("Escuchando mensajes");
+
     const currentState = this.getState();
     const rtdbRoomId = currentState.rtdbroomId;
 
-    const chatroomsRef = rtdb.ref("/rooms/" + rtdbRoomId + "/messages");
-    chatroomsRef.on("value", snaps => {
-      const messageFromServer = snaps.val();
-      const messageList = map(messageFromServer);
-      currentState.messages = messageList;
-      return this.setState(currentState);
+    const chatroomsRef = ref(rtdb, "rooms/" + rtdbRoomId + "/messages");
+    onValue(chatroomsRef, snaps => {
+      if (snaps.val() === null) {
+        console.error("No hay mensajes");
+        currentState.messages = [];
+        return this.setState(currentState);
+      } else {
+        const messageFromServer = snaps.val();
+        const messageList = map(messageFromServer);
+        console.log("mensajes", messageList);
+        currentState.messages = messageList;
+        return this.setState(currentState);
+      }
     });
   },
   getState() {
     return this.data;
   },
-
+  resetState() {
+    localStorage.removeItem("state");
+  },
   setState(newState) {
     this.data = newState;
     for (const cb of this.listeners) {
@@ -212,9 +233,6 @@ const state = {
     }
     localStorage.setItem("state", JSON.stringify(newState));
     console.log("Soy el state y he cambiado", this.data);
-  },
-  reset() {
-    localStorage.clear();
   },
   subscribe(callback: (cosa: any) => any) {
     this.listeners.push(callback);
