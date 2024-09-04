@@ -29,7 +29,7 @@ Welcome to the Chatroom Web Application! This project includes a simple front-en
 
 ## Live Demo
 
-Check out the live demo: [Chatroom Web App]
+Check out the live demo: [Chatroom Web App](https://app-chat-topaz.vercel.app/)
 
 Feel free to explore and start chatting!
 
