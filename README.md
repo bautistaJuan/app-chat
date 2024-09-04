@@ -13,7 +13,7 @@ Welcome to the Chatroom Web Application! This project includes a simple front-en
 - ![Express.js](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white)
 - ![Firestore](https://img.shields.io/badge/Firestore-FFCA28?style=flat&logo=firebase&logoColor=black)
 - ![Firebase Realtime Database](https://img.shields.io/badge/Firebase%20Realtime%20Database-FFCA28?style=flat&logo=firebase&logoColor=black)
-- ![Render](https://img.shields.io/badge/Render-394240?style=flat&logo=render&logoColor=white)
+- ![Vercel](https://img.shields.io/badge/Vercel-394240?style=flat&logo=vercel&logoColor=black)
 
 ## Features
 
