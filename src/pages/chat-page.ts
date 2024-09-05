@@ -182,7 +182,7 @@ class Chat extends HTMLElement {
         state.pushMessages(target["new-message"].value);
         target["new-message"].value;
       } else {
-        return alert("No se puede enviar el mensaje");
+        return;
       }
     });
   }
