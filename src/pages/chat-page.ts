@@ -66,8 +66,9 @@ class Chat extends HTMLElement {
         display: flex;
         flex-direction: column;
         gap: 12px;
-        padding: 10px 10px;
         overflow: auto;
+        word-break: break-word;
+        width: 100%;
       }
 
       .messages::-webkit-scrollbar {
@@ -93,20 +94,23 @@ class Chat extends HTMLElement {
       .message, .message-me{
         margin-bottom: 10px;
         border-radius: 5px;
-        }
+        display: flex;
+      }
       .message span{
         background-color: #f1f1f1;
       }
       .message span, .message-me span{
         padding: 10px;
         font-size: 1.2rem;
+        max-width: 320px;
       }
       .message-me{
-        text-align: right;
+        justify-content: end;
       }
       .message-me span{
         background-color: #7EB6FF;
         color: #fffc;
+        text-align: right;
       }
       .form-messages {
         display: flex;
@@ -152,12 +156,18 @@ class Chat extends HTMLElement {
 
     const currentState = state.getState();
     this.messages = currentState.messages;
+
     this.render();
   }
   eventListenersFromChat() {
     const form = this.shadow.querySelector(".form-messages");
     const back = this.shadow.querySelector("#back");
     const chatSection = this.shadow.querySelector(".messages");
+    chatSection?.scrollTo({
+      top: 10000,
+      left: 0,
+      behavior: "instant",
+    });
     const end = this.shadow.querySelector("#end");
     back?.addEventListener("click", () => Router.go("/room-selection"));
     end?.addEventListener("click", () => {
@@ -174,11 +184,6 @@ class Chat extends HTMLElement {
       } else {
         return alert("No se puede enviar el mensaje");
       }
-    });
-    chatSection?.scrollTo({
-      top: 1000,
-      left: 0,
-      behavior: "auto",
     });
   }
   render() {
